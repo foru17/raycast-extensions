@@ -1,5 +1,15 @@
 # Media Converter Changelog
 
+## [Enhancement] - 2024-12-13
+
+- Fix HEIC file format conversion not working as expected.
+- Refactor image conversion to use the sips command.
+
+## [Enhancement] - 2024-12-11
+
+- Added support for HEIC file format conversion using the sips command.
+- Fixed a bug where the Convert Media command would not work as expected.
+
 ## [Enhancement] - 2024-12-10
 
 - Added a new **Quick Convert** command that allows users to select a file in Finder, choose the desired format from a list, and convert it instantly.
