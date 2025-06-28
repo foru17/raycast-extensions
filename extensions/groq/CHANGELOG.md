@@ -1,5 +1,27 @@
 # Groq Changelog
 
+## [Updated Models] - 2025-04-07
+
+- Added `Llama 4 Scout` and `Llama 4 Maverick`
+
+## [Updated Models] - 2025-03-29
+
+- Removed deprecated `Mixtral 8x7B 32k`
+- Added `DeepSeek R1 32B 128K`
+- Added `Qwen 2.5 32B 128K`
+- Added `Qwen 2.5 Coder 32B 128K`
+- Added `Qwen QWQ 32B 128K`
+- Added `Mistral Saba 24B 32K`
+
+## [Updated Models] - 2025-02-09
+
+- Removed deprecated `Gemma 7B 8k`
+- Added reasoning formatting for thinking models
+
+## [New Models] - 2025-01-27
+
+- Added `DeepSeek R1 70B`
+
 ## [New Models] - 2024-12-13
 
 - Added `Llama 3.3 70B` and `Llama 3.3 70B SpecDec`

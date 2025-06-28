@@ -7,7 +7,10 @@
   "author": "EvanZhouDev",
   "contributors": [
     "ridemountainpig",
-    "d0zingcat"
+    "d0zingcat",
+    "ViGeng",
+    "anwarulislam",
+    "DanielPFitzsimmons"
   ],
   "categories": [
     "Productivity",
@@ -15,6 +18,14 @@
   ],
   "license": "MIT",
   "commands": [
+    {
+      "name": "history",
+      "title": "Command History",
+      "subtitle": "Google Gemini",
+      "description": "View your command history",
+      "mode": "view",
+      "icon": "gemini-icon.png"
+    },
     {
       "name": "askAI",
       "title": "Ask AI",
@@ -44,28 +55,48 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
           ]
         },
@@ -116,30 +147,134 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
+            },
+            {
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
+            }
+          ]
+        },
+        {
+          "name": "prompt",
+          "title": "System Prompt",
+          "description": "The prompt to use for this command.",
+          "type": "textfield",
+          "required": false,
+          "default": "Please analyze this screenshot and describe what you see. Include any relevant details about the content, layout, and any text or important elements visible in the image."
+        }
+      ]
+    },
+    {
+      "name": "askAboutSelectedScreen",
+      "title": "Ask About Selected Screen Area",
+      "subtitle": "Google Gemini",
+      "description": "Ask Google's Gemini about your selected screen area",
+      "mode": "no-view",
+      "icon": "screen-icon.png",
+      "arguments": [
+        {
+          "name": "query",
+          "placeholder": "Query",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "preferences": [
+        {
+          "description": "Which model this command uses.",
+          "name": "model",
+          "title": "Model",
+          "type": "dropdown",
+          "required": false,
+          "default": "default",
+          "data": [
+            {
+              "title": "Default",
+              "value": "default"
+            },
+            {
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
+              "value": "gemini-1.5-flash-latest"
+            },
+            {
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
             },
             {
               "title": "LearnLM 1.5 Pro Experimental",
               "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
+            },
+            {
+              "title": "Gemini Experimental 1206",
+              "value": "gemini-exp-1206"
+            },
+            {
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
+            },
+            {
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-    ]
+          ]
         },
         {
           "name": "prompt",
@@ -180,30 +315,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -236,30 +390,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -292,30 +465,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -348,30 +540,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -404,30 +615,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -460,30 +690,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -516,30 +765,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -572,30 +840,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -628,30 +915,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -684,30 +990,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -748,30 +1073,49 @@
               "value": "default"
             },
             {
-              "title": "Gemini 1.5 Pro",
-              "value": "gemini-1.5-pro-latest"
-            },
-            {
-              "title": "Gemini 1.5 Flash",
+              "title": "Gemini 1.5 Flash (Deprecated Sep25)",
               "value": "gemini-1.5-flash-latest"
             },
             {
-              "title": "Gemini 2.0 Flash Experimental",
-              "value": "gemini-2.0-flash-exp"
+              "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+              "value": "gemini-1.5-pro-latest"
+            },
+            {
+              "title": "LearnLM 1.5 Pro Experimental",
+              "value": "learnlm-1.5-pro-experimental"
+            },
+            {
+              "title": "Gemini 2.0 Flash-Lite",
+              "value": "gemini-2.0-flash-lite"
+            },
+            {
+              "title": "Gemini 2.0 Flash",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "title": "Gemini 2.0 Flash Thinking Experimental",
+              "value": "gemini-2.0-flash-thinking-exp"
             },
             {
               "title": "Gemini Experimental 1206",
               "value": "gemini-exp-1206"
             },
             {
-              "title": "Gemini 2.0 Flash Thinking Experimental",
-              "value": "gemini-2.0-flash-thinking-exp-1219"
+              "title": "Gemini 2.0 Pro Experimental",
+              "value": "gemini-2.0-pro-exp"
             },
             {
-              "title": "LearnLM 1.5 Pro Experimental",
-              "value": "learnlm-1.5-pro-experimental"
+              "title": "Gemini 2.5 Flash Preview",
+              "value": "gemini-2.5-flash-preview-04-17"
+            },
+            {
+              "title": "Gemini 2.5 Pro Experimental",
+              "value": "gemini-2.5-pro-exp-03-25"
+            },
+            {
+              "title": "Gemini 2.5 Pro Preview",
+              "value": "gemini-2.5-pro-preview-05-06"
             }
-
           ]
         },
         {
@@ -780,15 +1124,23 @@
           "description": "The prompt to use for this command.",
           "type": "textfield",
           "required": false,
-          "default": "Translate the following text to {targetLanguage}. Try to keep all of the words from the given text and maintain the original meaning as closely as possible. ONLY return the translated text and nothing else."
+          "default": "Try to keep all of the words from the given text and maintain the original meaning as closely as possible. ONLY return the translated text and nothing else."
         },
         {
           "name": "defaultTargetLanguage",
-          "title": "Default Target Language",
-          "description": "The default target language to use for this command.",
+          "title": "First Target Language",
+          "description": "Translate all other languages to this language",
           "type": "textfield",
           "required": false,
-          "default": "en"
+          "default": "English"
+        },
+        {
+          "name": "secondTargetLanguage",
+          "title": "Second Target Language",
+          "description": "Translate the first target language to this language",
+          "type": "textfield",
+          "required": false,
+          "default": "Chinese"
         }
       ]
     }
@@ -807,37 +1159,64 @@
       "title": "Model",
       "type": "dropdown",
       "required": false,
-      "default": "gemini-1.5-flash-latest",
+      "default": "gemini-2.0-flash",
       "data": [
         {
-          "title": "Gemini 1.5 Pro",
-          "value": "gemini-1.5-pro-latest"
-        },
-        {
-          "title": "Gemini 1.5 Flash",
+          "title": "Gemini 1.5 Flash (Deprecated Sep25)",
           "value": "gemini-1.5-flash-latest"
         },
         {
-          "title": "Gemini 2.0 Flash Experimental",
-          "value": "gemini-2.0-flash-exp"
+          "title": "Gemini 1.5 Pro (Deprecated Sep25)",
+          "value": "gemini-1.5-pro-latest"
+        },
+        {
+          "title": "LearnLM 1.5 Pro Experimental",
+          "value": "learnlm-1.5-pro-experimental"
+        },
+        {
+          "title": "Gemini 2.0 Flash-Lite",
+          "value": "gemini-2.0-flash-lite"
+        },
+        {
+          "title": "Gemini 2.0 Flash",
+          "value": "gemini-2.0-flash"
+        },
+        {
+          "title": "Gemini 2.0 Flash Thinking Experimental",
+          "value": "gemini-2.0-flash-thinking-exp"
         },
         {
           "title": "Gemini Experimental 1206",
           "value": "gemini-exp-1206"
         },
         {
-          "title": "Gemini 2.0 Flash Thinking Experimental",
-          "value": "gemini-2.0-flash-thinking-exp-1219"
+          "title": "Gemini 2.0 Pro Experimental",
+          "value": "gemini-2.0-pro-exp"
         },
         {
-          "title": "LearnLM 1.5 Pro Experimental",
-          "value": "learnlm-1.5-pro-experimental"
+          "title": "Gemini 2.5 Flash Preview",
+          "value": "gemini-2.5-flash-preview-04-17"
+        },
+        {
+          "title": "Gemini 2.5 Pro Experimental",
+          "value": "gemini-2.5-pro-exp-03-25"
+        },
+        {
+          "title": "Gemini 2.5 Pro Preview",
+          "value": "gemini-2.5-pro-preview-05-06"
         }
       ]
+    },
+    {
+      "name": "customModel",
+      "title": "Custom Model",
+      "description": "Custom model in case you use a special model that is not listed in the dropdown. It will override the default model. Keep this empty if you don't have a custom model.",
+      "type": "textfield",
+      "required": false
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.62.0",
+    "@raycast/api": "^1.90.0",
     "@raycast/utils": "^1.9.0",
     "gemini-ai": "^2.0.1",
     "jimp": "^0.22.10",
@@ -857,6 +1236,7 @@
     "dev": "ray develop",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
-    "publish": "npx @raycast/api@latest publish"
+    "pull": "ray pull-contributions",
+    "publish": "ray publish"
   }
 }

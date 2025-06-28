@@ -1,5 +1,14 @@
 # Browser Bookmarks Changelog
 
+## [Support for Dia and Ghost Browser] - 2025-06-26
+
+- Added support for `Dia` browser.
+- Added support for `Ghost Browser`.
+
+## [Support Island Browser] - 2025-01-30
+
+- Added support for `Island` browser.
+
 ## [Support Whale Browser] - 2024-12-14
 
 - Added support for `Whale` Browser Desktop.

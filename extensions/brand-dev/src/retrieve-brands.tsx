@@ -49,6 +49,14 @@ type Address = {
   postal_code?: string;
   additional_info?: string;
 };
+type Stock = {
+  ticker: string;
+  exchange: string;
+};
+type Font = {
+  usage: string;
+  name: string;
+};
 type Brand = {
   domain: string;
   title: string | null;
@@ -59,7 +67,10 @@ type Brand = {
   backdrops: Backdrop[];
   socials: Social[];
   address: Address | null;
-  verified: boolean;
+  stock: Stock | null;
+  fonts: Font[];
+  email: string | null;
+  phone: string | null;
 };
 type Response = {
   status: "ok";
@@ -80,9 +91,10 @@ export default function RetrieveBrand(props: LaunchProps<{ arguments: Arguments.
   const { isLoading, value: brands = [], setValue: setBrands } = useLocalStorage<BrandInStorage[]>("brands", []);
 
   async function updateBrands(newBrand: BrandInStorage) {
-    const newBrands = brands;
+    const newBrands = [...brands];
     const index = newBrands.findIndex((brand) => brand.domain === newBrand.domain);
-    index !== -1 ? (newBrands[index] = newBrand) : newBrands.push(newBrand);
+    if (index !== -1) newBrands[index] = newBrand;
+    else newBrands.push(newBrand);
     await setBrands(newBrands);
     push(<ViewBrand brand={newBrand} />);
   }
@@ -247,7 +259,7 @@ function SearchBrand({ search, onSearched }: SearchBrandProps) {
 
 function ViewBrand({ brand }: { brand: BrandInStorage }) {
   const logo = brand.logos[0]?.url;
-  const markdown = `# ${brand.title}
+  const markdown = `# ${brand.title} ${brand.stock ? `(${brand.stock.ticker}, ${brand.stock.exchange})` : ""}
 
 ${brand.description}
 
@@ -270,7 +282,6 @@ ${brand.backdrops.map(({ url }) => `![${url}](${url})`).join(`\n\n`)}`;
         <Detail.Metadata>
           <Detail.Metadata.Label title="Domain" icon={logo || Icon.QuestionMark} text={brand.domain} />
           <Detail.Metadata.Label title="Slogan" text={brand.slogan || "N/A"} />
-          <Detail.Metadata.Label title="Verified" icon={brand.verified ? Icon.Check : Icon.Multiply} />
           <Detail.Metadata.Separator />
           <Detail.Metadata.TagList title="Colors">
             {brand.colors.map((color) => (
@@ -278,42 +289,80 @@ ${brand.backdrops.map(({ url }) => `![${url}](${url})`).join(`\n\n`)}`;
             ))}
           </Detail.Metadata.TagList>
           <Detail.Metadata.Separator />
-          {brand.socials.map((social) => (
-            <Detail.Metadata.Link
-              key={social.type}
-              title={formatSocialType(social.type)}
-              text={social.url}
-              target={social.url}
-            />
+          {brand.fonts?.map((font) => (
+            <Detail.Metadata.Label key={font.name + font.usage} title={capitalize(font.usage)} text={font.name} />
           ))}
+          <Detail.Metadata.Separator />
+          {!brand.socials.length ? (
+            <Detail.Metadata.Label title="Socials" text="N/A" />
+          ) : (
+            brand.socials.map((social) => (
+              <Detail.Metadata.Link
+                key={social.type}
+                title={formatSocialType(social.type)}
+                text={social.url}
+                target={social.url}
+              />
+            ))
+          )}
           <Detail.Metadata.Separator />
           {!brand.address ? (
             <Detail.Metadata.Label title="Address" text="N/A" />
           ) : (
             <>
-              {Object.entries(brand.address).map(([key, val]) => (
-                <Detail.Metadata.Label key={key} title={key} text={val} />
-              ))}
+              {brand.address.street && <Detail.Metadata.Label title="Street" text={brand.address.street} />}
+              {brand.address.city && <Detail.Metadata.Label title="City" text={brand.address.city} />}
+              {brand.address.country && <Detail.Metadata.Label title="Country" text={brand.address.country} />}
+              {brand.address.country_code && (
+                <Detail.Metadata.Label title="Country Code" text={brand.address.country_code} />
+              )}
+              {brand.address.state_province && (
+                <Detail.Metadata.Label title="State / Province" text={brand.address.state_province} />
+              )}
+              {brand.address.state_code && <Detail.Metadata.Label title="State Code" text={brand.address.state_code} />}
+              {brand.address.postal_code && (
+                <Detail.Metadata.Label title="Postal Code" text={brand.address.postal_code} />
+              )}
+              {brand.address.additional_info && (
+                <Detail.Metadata.Label title="Additional Info" text={brand.address.additional_info} />
+              )}
             </>
+          )}
+          <Detail.Metadata.Separator />
+          {brand.email ? (
+            <Detail.Metadata.Link title="Email" text={brand.email} target={`mailto:${brand.email}`} />
+          ) : (
+            <Detail.Metadata.Label title="Email" text="N/A" />
+          )}
+          {brand.phone ? (
+            <Detail.Metadata.Link title="Phone" text={brand.phone} target={`tel:${brand.phone}`} />
+          ) : (
+            <Detail.Metadata.Label title="Phone" text="N/A" />
           )}
         </Detail.Metadata>
       }
       actions={
         <ActionPanel>
           <ActionPanel.Section>
-            <Action.OpenInBrowser
-              icon="brand-dev-purple.png"
-              title="View on brand.dev"
-              url={`https://world.brand.dev/brand/${brand.domain}`}
-            />
-            {brand.logos.length > 0 && (
-              <Action.OpenInBrowser title="Open Logo in Browser" icon={brand.logos[0].url} url={brand.logos[0].url} />
-            )}
+            <Action.OpenInBrowser icon={logo} title={`Go to ${brand.domain}`} url={`https://${brand.domain}`} />
+            {brand.logos.map((logo, index) => (
+              <Action.OpenInBrowser
+                key={index}
+                shortcut={{ modifiers: ["cmd"], key: (index + 1).toString() as Keyboard.KeyEquivalent }}
+                title={`Open Logo # ${index + 1} in Browser`}
+                icon={logo.url}
+                url={logo.url}
+              />
+            ))}
           </ActionPanel.Section>
         </ActionPanel>
       }
     />
   );
+}
+
+function capitalize(txt: string) {
+  return txt.charAt(0).toUpperCase() + txt.slice(1);
 }
 
 function formatSocialType(type: string) {
@@ -325,6 +374,6 @@ function formatSocialType(type: string) {
     case "youtube":
       return "YouTube";
     default:
-      return type.charAt(0).toUpperCase() + type.slice(1);
+      return capitalize(type);
   }
 }
