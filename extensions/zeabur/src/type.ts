@@ -66,7 +66,7 @@ export interface ProjectInfo {
       icon: string;
       name: string;
       __typename: string;
-    };
+    } | null;
     name: string;
     id: string;
     country: string;
@@ -181,5 +181,17 @@ export interface RedeployService {
   }[];
   data: {
     redeployService: boolean;
+  };
+}
+
+export interface ProjectUsage {
+  data: {
+    projectUsage: {
+      usages: {
+        entity: string;
+        usage: number;
+      }[];
+      budget: number;
+    };
   };
 }
