@@ -101,6 +101,34 @@ export default class MusicAssistantClient {
   }
 
   /**
+   * Increase the volume on the specified player
+   *
+   * @param playerId - The unique identifier of the player to control
+   * @throws {Error} When the API command fails or player is unavailable
+   * @example
+   * ```typescript
+   * await client.volumeUp("living-room-player");
+   * ```
+   */
+  async volumeUp(playerId: string): Promise<void> {
+    await executeApiCommand(async (api) => await api.playerCommandVolumeUp(playerId));
+  }
+
+  /**
+   * Decrease the volume on the specified player
+   *
+   * @param playerId - The unique identifier of the player to control
+   * @throws {Error} When the API command fails or player is unavailable
+   * @example
+   * ```typescript
+   * await client.volumeDown("living-room-player");
+   * ```
+   */
+  async volumeDown(playerId: string): Promise<void> {
+    await executeApiCommand(async (api) => await api.playerCommandVolumeDown(playerId));
+  }
+
+  /**
    * Get detailed player information including volume levels
    *
    * @param playerId - The unique identifier of the player
@@ -160,6 +188,7 @@ export default class MusicAssistantClient {
 
   /**
    * Extracts the display title for the menu bar from the current queue item
+   * Only returns a title while the queue is actively playing
    *
    * @param queue - The player queue to extract title from
    * @returns The name of the current item, or undefined if no current item
@@ -172,7 +201,11 @@ export default class MusicAssistantClient {
    * ```
    */
   getDisplayTitle(queue?: PlayerQueue): string | undefined {
-    return queue?.current_item?.name;
+    if (!queue || queue.state !== PlayerState.PLAYING) {
+      return undefined;
+    }
+
+    return queue.current_item?.name;
   }
 
   /**
@@ -189,7 +222,7 @@ export default class MusicAssistantClient {
    * ```
    */
   shouldUpdateTitle(currentTitle: string | undefined, newTitle: string | undefined): boolean {
-    return newTitle !== undefined && newTitle !== currentTitle;
+    return newTitle !== currentTitle;
   }
 
   /**

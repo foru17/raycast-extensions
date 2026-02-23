@@ -1,4 +1,3 @@
-import type { JSX } from "react";
 import {
   Action,
   ActionPanel,
@@ -19,8 +18,9 @@ import {
   showToast,
   Toast,
   Keyboard,
+  clearSearchBar,
 } from "@raycast/api";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { CaseType, aliases, convert, functions, modifyCasesWrapper } from "./cases.js";
 
 const MAX_RECENT_CASES = 4;
@@ -135,9 +135,13 @@ export default function Command(props: LaunchProps) {
     setRecentCases(recent);
   }, [recent]);
 
+  useEffect(() => {
+    if (props.fallbackText) clearSearchBar();
+  }, []);
+
   const refreshContent = async () => {
     try {
-      setContent(await readContent(preferredSource));
+      setContent(props.fallbackText || (await readContent(preferredSource)));
     } catch (error) {
       if (error instanceof NoTextError) {
         showToast({
